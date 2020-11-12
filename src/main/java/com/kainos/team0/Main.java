@@ -88,14 +88,17 @@ public class Main {
         String department = "";
         Map<Integer, String> depts = ec.generateDepartments();
         while(true) {
-             department = readLine("Enter department ID:");
+            write("Enter department ID:");
             // display departments
             for(Integer index: depts.keySet()) {
                 write(index + ". " + depts.get(index));
             }
-            if (!depts.keySet().contains(Integer.parseInt(department) )) {
+            department = readLine();
+            if (!depts.keySet().contains(Integer.parseInt(department))) {
                 // not a option
                 write("Invalid department number.");
+            } else {
+                break;
             }
         }
 
