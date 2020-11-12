@@ -88,6 +88,16 @@ public class Main {
         if (department.equals("#")) {
             return;
         }
+        boolean isSalesEmployee = false;
+        String commisionRate;
+        String salesTotal;
+        if (department.equals("2")){
+            isSalesEmployee = true;
+            commisionRate = readLine("Enter commision rate:");
+            salesTotal = readLine("Enter sales total:");
+        }
+
+
         int departmentID = Integer.parseInt(department);
         String name = readLine("Enter Employee name:");
         if (name.equals("#")) {
@@ -119,6 +129,14 @@ public class Main {
         // pass to controller
 
         String ret = ec.CreateEmployee(name, address, ni, salaryInt, iban, bic, number, departmentID);
+        if (ret != null) {
+            write( ret+ " has been added to the system.");
+        } else {
+            write("Error: The user could not be added.");
+        }
+
+        //ret = ec.CreateSalesEmployee(commisionRate, salesTotal);
+
         if (ret != null) {
             write( ret+ " has been added to the system.");
         } else {
