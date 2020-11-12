@@ -48,15 +48,19 @@ public class Main {
                         System.exit(0);
                     case 1:
                         requestEmployee();
+                        waitToContinue();
                         break;
                     case 2:
                         requestDepartment();
+                        waitToContinue();
                         break;
                     case 3:
                         requestEmployeeGrossPayReport();
+                        waitToContinue();
                         break;
                     case 4:
                         requestHighestSales();
+                        waitToContinue();
                         break;
                     default:
                         write("Invalid selection");
@@ -88,8 +92,12 @@ public class Main {
         return readLine(null);
     }
 
+    private static void waitToContinue() {
+        readLine("\nPress enter key to continue...");
+    }
     private static void requestEmployee() {
-        write("This function enters a new employee into the system.\nEnter '#' to cancel.");
+        // OPTION 1
+        write("\nThis function enters a new employee into the system.\nEnter '#' to cancel.");
         String number = readLine("Enter Employee ID number:");
         if (number.equals("#")) {
             return;
@@ -175,19 +183,28 @@ public class Main {
     }
 
     private static void requestDepartment() {
-        write("Full Employee Report:");
-        write(ec.generateReport().toString());
+        // OPTION 2
+        write("\nFull Employee Department Report:");
         //generateReports returns Map<String, List<String>>
+        var map = ec.generateReport();
+        for(String dept: map.keySet()) {
+            write(dept + ": ");
+            for(String name: map.get(dept)) {
+                write("  - " + name);
+            }
+        }
     }
 
     private static void requestEmployeeGrossPayReport() {
+        // OPTION 3
         for (String result : ec.generateGrossPayReport()) {
             write(result);
         }
     }
 
     private static void requestHighestSales() {
-        write("Highest Total Sales Report:");
+        // OPTION 4
+        write("\nHighest Total Sales Report:");
         write(ec.generateHighestSalesTotalReport());
     }
 }
