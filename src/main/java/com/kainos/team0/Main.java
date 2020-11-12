@@ -40,6 +40,7 @@ public class Main {
             write("3. Generate employee gross pay report");
             write("4. Generate highest total sales report");
             write("5. Create new Project");
+            write("6. Show Project");
 
 
 
@@ -64,6 +65,9 @@ public class Main {
                         break;
                     case 5:
                         requestNewProject();
+                        break;
+                    case 6:
+                        requestProjects();
                         break;
                     default:
                         write("Invalid selection");
@@ -211,5 +215,12 @@ public class Main {
         } else {
             write("Error: The user could not be added.");
         }
+    }
+
+
+    private static void requestProjects() {
+        write("Full Employee Report:");
+        write(pc.getEmployeesOnProject().toString());
+        //generateReports returns Map<String, List<String>>
     }
 }
