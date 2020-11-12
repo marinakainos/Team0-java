@@ -1,4 +1,4 @@
-SELECT Department.DepartmentID, Department.DepartmentName, Employee.Name
+SELECT Department.DepartmentName, Employee.Name
 FROM Employee, Department
-where Employee.DepartmentID = Department.DepartmentID
+WHERE Employee.DepartmentID = Department.DepartmentID
 ORDER BY Department.DepartmentID;
