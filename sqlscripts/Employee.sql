@@ -7,6 +7,8 @@ CREATE TABLE Employee (
     BIC VARCHAR(11),
     Salary INT NOT NULL CHECK (Salary >= 0),
     EmployeeNumber CHAR(8) NOT NULL,
+    DepartmentID SMALLINT NOT NULL,
     UNIQUE(NI),
-    UNIQUE(EmployeeNumber)
+    UNIQUE(EmployeeNumber),
+    CONSTRAINT FK_DepartmentID FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID)
 );
