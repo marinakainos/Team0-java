@@ -1,22 +1,30 @@
 package com.kainos.team0;
 
+import com.kainos.team0.employee_stuff.EmployeeController;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Connection;
 
 public class Main {
     private static BufferedReader reader;
+    private static EmployeeController ec;
 
     public static void main(String[] args) {
         // System.out.println(DBConnection.testConnection());
 
         // Read and Parse input from the user and display out to the user
 
+        write("Team 0 HR");
         // setup
         reader = new BufferedReader(new InputStreamReader(System.in));
 
+        write("Connecting... Please wait...");
+        Connection c = DBConnection.getConnection();
+        ec = new EmployeeController(c);
 
-        write("Team 0 HR");
+        write("Connected.");
 
         while (true) {
             // 1. Enter employee details
@@ -75,6 +83,12 @@ public class Main {
         if (number.equals("#")) {
             return;
         }
+        String department = readLine("Enter department ID:");
+        // int
+        if (department.equals("#")) {
+            return;
+        }
+        int departmentID = Integer.parseInt(department);
         String name = readLine("Enter Employee name:");
         if (name.equals("#")) {
             return;
@@ -96,11 +110,21 @@ public class Main {
             return;
         }
         String salary = readLine("Enter the base salary (enter '123400' where it is £1234.00)");
+        //int
         if (salary.equals("#")) {
             return;
         }
+        int salaryInt = Integer.parseInt(salary);
 
         // pass to controller
+
+        String ret = ec.CreateEmployee(name, address, ni, salaryInt, iban, bic, number, departmentID);
+        if (ret != null) {
+            write( ret+ " has been added to the system.");
+        } else {
+            write("Error: The user could not be added.");
+        }
+
     }
 
     private static void requestDepartment() {
