@@ -1,7 +1,6 @@
 package com.kainos.team0.employee_stuff;
 
 import com.kainos.team0.DBConnection;
-import com.mysql.cj.conf.ConnectionUrlParser;
 
 import java.sql.*;
 import java.util.ArrayList;
