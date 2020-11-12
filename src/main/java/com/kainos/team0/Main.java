@@ -106,6 +106,7 @@ public class Main {
         if (department.equals("#")) {
             return;
         }
+
         boolean isSalesEmployee = false;
         String commisionRate;
         String salesTotal;
@@ -152,13 +153,13 @@ public class Main {
         } else {
             write("Error: The user could not be added.");
         }
-
-        //ret = ec.CreateSalesEmployee(commisionRate, salesTotal);
-
-        if (ret != null) {
-            write( ret+ " has been added to the system.");
-        } else {
-            write("Error: The user could not be added.");
+        if (isSalesEmployee) {
+            //ret = ec.CreateSalesEmployee(commisionRate, salesTotal);
+            if (ret != null) {
+                write( ret+ " has been added to the system.");
+            } else {
+                write("Error: The user could not be added.");
+            }
         }
 
     }
