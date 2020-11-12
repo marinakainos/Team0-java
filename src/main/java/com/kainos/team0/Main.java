@@ -1,6 +1,7 @@
 package com.kainos.team0;
 
 import com.kainos.team0.employee_stuff.EmployeeController;
+import com.kainos.team0.employee_stuff.ProjectController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +13,7 @@ public class Main {
     private static BufferedReader reader;
     private static InputStreamReader isr;
     private static EmployeeController ec;
+    private static ProjectController pc;
 
     public static void main(String[] args) {
         // System.out.println(DBConnection.testConnection());
@@ -26,6 +28,7 @@ public class Main {
         write("Connecting... Please wait...");
         Connection c = DBConnection.getConnection();
         ec = new EmployeeController(c);
+        pc = new ProjectController(c);
 
         write("Connected.");
 
@@ -38,6 +41,12 @@ public class Main {
             write("2. Generate new department report");
             write("3. Generate employee gross pay report");
             write("4. Generate highest total sales report");
+            write("5. Create new Project");
+<<<<<<< HEAD
+            write("6. Show Project");
+=======
+            write("7. Assign Employee to Project");
+>>>>>>> 20035d206dfcfa4f120a871ad9b49202ce846c67
 
 
 
@@ -63,6 +72,17 @@ public class Main {
                     case 4:
                         requestHighestSales();
                         waitToContinue();
+                        break;
+                    case 5:
+                        requestNewProject();
+                        break;
+<<<<<<< HEAD
+                    case 6:
+                        requestProjects();
+=======
+                    case 7:
+                        requestAssignEmployee();
+>>>>>>> 20035d206dfcfa4f120a871ad9b49202ce846c67
                         break;
                     default:
                         write("Invalid selection");
@@ -214,5 +234,54 @@ public class Main {
         // OPTION 4
         write("\nHighest Total Sales Report:");
         write(ec.generateHighestSalesTotalReport());
+    }
+
+    private static void requestNewProject() {
+        write("This function enters a new project into the system.\nEnter '#' to cancel.");
+        String projectName = readLine("Enter Project name:");
+        if (projectName.equals("#")) {
+            return;
+        }
+
+        String ret = pc.CreateProject(projectName);
+        if (ret != null) {
+            write( ret + " has been added to the system.");
+        } else {
+            write("Error: The user could not be added.");
+        }
+    }
+
+<<<<<<< HEAD
+
+    private static void requestProjects() {
+        write("Full Employee Report:");
+        write(pc.getEmployeesOnProject().toString());
+        //generateReports returns Map<String, List<String>>
+=======
+    private static void requestAssignEmployee() {
+        write("This function assigns an employee to a project in the system.\nEnter '#' to cancel.");
+        write("Enter Project ID:");
+
+        Map<Integer, String> depts = pc.GetProjects();
+        for(Integer index: depts.keySet()) {
+            write(index + ". " + depts.get(index));
+        }
+        String projectID = readLine();
+        if (projectID.equals("#")) {
+            return;
+        }
+
+        String employeeID = readLine("Enter Employee ID:");
+        if (employeeID.equals("#")) {
+            return;
+        }
+
+        boolean ret = pc.AssignEmployeeToProject(projectID, employeeID);
+        if (ret) {
+            write(employeeID + " has been assigned to " + projectID);
+        } else {
+            write ("Error: The assignment could not be made.");
+        }
+>>>>>>> 20035d206dfcfa4f120a871ad9b49202ce846c67
     }
 }
