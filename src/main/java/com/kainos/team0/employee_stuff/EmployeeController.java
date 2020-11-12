@@ -158,6 +158,32 @@ public class EmployeeController {
         return report;
     }
 
+    public String generateHighestSalesTotalReport () {
+        String sql = "SELECT Employee.Name, SalesEmployee.TotalSales "
+                + "FROM Employee, SalesEmployee "
+                + "WHERE Employee.EmployeeID = SalesEmployee.EmployeeID "
+                + "ORDER BY SalesEmployee.TotalSales DESC "
+                + "LIMIT 1";
+
+        String report = "";
+
+        try {
+            Statement st = connection.createStatement();
+
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String employee = rs.getString("Employee.Name");
+                String totalSales = rs.getString("SalesEmployee.TotalSales");
+
+                report = "Employee: " + employee + " had with the highest sales with: " + totalSales + " sales.";
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return report;
+    }
+
     private String genEmployeeNumber(){
         return "1";
     }
