@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class EmployeeController {
 
+    private Connection connection;
+
     public static void main(String[] args){
         Connection c = DBConnection.getConnection();
         EmployeeController empC = new EmployeeController(c);
@@ -24,18 +26,17 @@ public class EmployeeController {
         System.out.println(empC.generateReport());
     }
 
-     private Connection connection;
-
     public EmployeeController (Connection connection){
         this.connection = connection;
     }
 
-    public void CreateEmployee(String name,
+    public String CreateEmployee(String name,
                                String address,
                                String NI,
                                int salary,
                                String IBAN,
                                String BIC,
+                               String employeeNumber,
                                int departmentID) {
 
         String insertString =
@@ -55,7 +56,6 @@ public class EmployeeController {
                         "?," +
                         "?," +
                         "?)";
-        System.out.println(insertString);
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(insertString);
@@ -66,16 +66,19 @@ public class EmployeeController {
             preparedStatement.setInt(4, salary);
             preparedStatement.setString(5, IBAN);
             preparedStatement.setString(6, BIC);
-            preparedStatement.setString(7, genEmployeeNumber());
+            preparedStatement.setString(7, employeeNumber);
             preparedStatement.setInt(8, departmentID);
 
 
             int rowsAffected = preparedStatement.executeUpdate();
-            System.out.println(rowsAffected);
+            if (rowsAffected == 1) {
+                return name;
+            }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return null;
     }
 
 
@@ -111,5 +114,4 @@ public class EmployeeController {
     private String genEmployeeNumber(){
         return "1";
     }
-
 }

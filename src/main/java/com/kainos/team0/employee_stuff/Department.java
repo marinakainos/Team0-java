@@ -2,10 +2,9 @@ package com.kainos.team0.employee_stuff;
 
 public class Department {
 
+    private String departmentName;
 
     public Department(String departmentName) {
-        this.name = departmentName;
+        this.departmentName = departmentName;
     }
-
-    private string departmentName;
 }
