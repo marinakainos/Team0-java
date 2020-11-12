@@ -130,14 +130,15 @@ public class Main {
         }
 
         boolean isSalesEmployee = false;
-        String commisionRate;
-        String salesTotal;
+        String commisionRate = "";
+        String salesTotal = "";
         if (department.equals("2")){
             isSalesEmployee = true;
             commisionRate = readLine("Enter commision rate:");
             salesTotal = readLine("Enter sales total:");
         }
-
+        float commisionR = Float.parseFloat(commisionRate);
+        int salesT = Integer.parseInt(salesTotal);
 
         int departmentID = Integer.parseInt(department);
         String name = readLine("Enter Employee name:");
@@ -169,14 +170,16 @@ public class Main {
 
         // pass to controller
 
-        String ret = ec.CreateEmployee(name, address, ni, salaryInt, iban, bic, number, departmentID);
-        if (ret != null) {
-            write( ret+ " has been added to the system.");
-        } else {
-            write("Error: The user could not be added.");
-        }
+
         if (isSalesEmployee) {
-            //ret = ec.CreateSalesEmployee(commisionRate, salesTotal);
+            String ret = ec.createSalesEmployee(name, address, ni, salaryInt, iban, bic, number, departmentID, commisionR, salesT);
+            if (ret != null) {
+                write( ret+ " has been added to the system.");
+            } else {
+                write("Error: The user could not be added.");
+            }
+        } else {
+            String ret = ec.CreateEmployee(name, address, ni, salaryInt, iban, bic, number, departmentID);
             if (ret != null) {
                 write( ret+ " has been added to the system.");
             } else {

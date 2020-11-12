@@ -83,7 +83,7 @@ public class EmployeeController {
         return null;
     }
 
-    public void createSalesEmployee(String name,
+    public String createSalesEmployee(String name,
                                       String address,
                                       String NI,
                                       int salary,
@@ -110,11 +110,16 @@ public class EmployeeController {
             ps.setInt(1, id);
             ps.setFloat(2, commissionRate);
             ps.setInt(3, totalSales);
-            ps.executeUpdate();
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected == 1) {
+                return name;
+            }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        return null;
     }
 
 
