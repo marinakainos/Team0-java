@@ -134,6 +134,8 @@ public class EmployeeController {
     public List<String> generateGrossPayReport() {
         String sql = "SELECT Name, ROUND((Salary / 12) * 0.75, 2) as GrossPay " +
                 "FROM Employee " +
+                "LEFT JOIN SalesEmployee USING (EmployeeID) " +
+                "WHERE SalesEmployee.EmployeeID IS NULL " +
                 "UNION " +
                 "SELECT Name, ROUND((Salary / 12 + CommissionRate *  TotalSales) * 0.75, 2) as GrossPay " +
                 "FROM Employee " +
