@@ -40,6 +40,7 @@ public class Main {
             write("3. Generate employee gross pay report");
             write("4. Generate highest total sales report");
             write("5. Create new Project");
+            write("6. Assign Employee to Project");
 
 
 
@@ -64,6 +65,9 @@ public class Main {
                         break;
                     case 5:
                         requestNewProject();
+                        break;
+                    case 6:
+                        requestAssignEmployee();
                         break;
                     default:
                         write("Invalid selection");
@@ -210,6 +214,26 @@ public class Main {
             write( ret + " has been added to the system.");
         } else {
             write("Error: The user could not be added.");
+        }
+    }
+
+    private static void requestAssignEmployee() {
+        write("This function assigns an employee to a project in the system.\nEnter '#' to cancel.");
+        String projectID = readLine("Enter Project ID:");
+        if (projectID.equals("#")) {
+            return;
+        }
+
+        String employeeID = readLine("Enter Employee ID:");
+        if (employeeID.equals("#")) {
+            return;
+        }
+
+        boolean ret = pc.AssignEmployeeToProject(projectID, employeeID);
+        if (ret) {
+            write(employeeID + " has been assigned to " + projectID);
+        } else {
+            write ("Error: The assignment could not be made.");
         }
     }
 }

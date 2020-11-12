@@ -38,7 +38,26 @@ public class ProjectController {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         return null;
+    }
+
+    public boolean AssignEmployeeToProject(String projectID, String employeeID) {
+        String insertString = "INSERT INTO Assignment(ProjectID, EmployeeID) VALUES (?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+            preparedStatement.setString(1, projectID);
+            preparedStatement.setString(2, employeeID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected == 1) {
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return false;
     }
 }
 
