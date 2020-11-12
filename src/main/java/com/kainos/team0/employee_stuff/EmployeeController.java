@@ -1,8 +1,9 @@
-package com.kainos.team0;
+package com.kainos.team0.employee_stuff;
+
+import com.kainos.team0.DBConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Connection;
 
 public class EmployeeController {
@@ -10,13 +11,13 @@ public class EmployeeController {
     public static void main(String[] args){
         Connection c = DBConnection.getConnection();
         EmployeeController empC = new EmployeeController(c);
-        empC.CreateEmployee("Sam Dowell",
-                "Home",
-                "PC0000D",
+        empC.CreateEmployee("Sam Dowell2",
+                "Home2",
+                "PC0000E",
                 10_000_00,
                 "UK0000000000000",
                 "dcasdaca",
-                "1");
+                1);
     }
 
      private Connection connection;
@@ -31,8 +32,7 @@ public class EmployeeController {
                                int salary,
                                String IBAN,
                                String BIC,
-                               String departmentID
-                               ) {
+                               int departmentID) {
 
         String insertString =
                 "INSERT INTO Employee(Name, " +
@@ -56,7 +56,6 @@ public class EmployeeController {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(insertString);
 
-
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, address);
             preparedStatement.setString(3, NI);
@@ -64,11 +63,11 @@ public class EmployeeController {
             preparedStatement.setString(5, IBAN);
             preparedStatement.setString(6, BIC);
             preparedStatement.setString(7, genEmployeeNumber());
-            preparedStatement.setString(8, departmentID);
+            preparedStatement.setInt(8, departmentID);
 
 
             int rowsAffected = preparedStatement.executeUpdate();
-
+            System.out.println(rowsAffected);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -77,7 +76,7 @@ public class EmployeeController {
 
 
 
-        private String genEmployeeNumber(){
+    private String genEmployeeNumber(){
         return "1";
     }
 }
