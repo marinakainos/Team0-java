@@ -59,5 +59,23 @@ public class ProjectController {
 
         return false;
     }
+
+    public Map<Integer, String> GetProjects() {
+        String queryString = "SELECT ProjectID, ProjectName FROM Project";
+
+        Map<Integer, String> projects = new HashMap<>();
+        try {
+            ResultSet rs = connection.prepareStatement(queryString).executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("ProjectID");
+                String name = rs.getString("ProjectName");
+                projects.put(id, name);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return projects;
+    }
 }
 

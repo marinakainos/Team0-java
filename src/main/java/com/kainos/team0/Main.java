@@ -40,7 +40,7 @@ public class Main {
             write("3. Generate employee gross pay report");
             write("4. Generate highest total sales report");
             write("5. Create new Project");
-            write("6. Assign Employee to Project");
+            write("7. Assign Employee to Project");
 
 
 
@@ -66,7 +66,7 @@ public class Main {
                     case 5:
                         requestNewProject();
                         break;
-                    case 6:
+                    case 7:
                         requestAssignEmployee();
                         break;
                     default:
@@ -219,7 +219,13 @@ public class Main {
 
     private static void requestAssignEmployee() {
         write("This function assigns an employee to a project in the system.\nEnter '#' to cancel.");
-        String projectID = readLine("Enter Project ID:");
+        write("Enter Project ID:");
+
+        Map<Integer, String> depts = pc.GetProjects();
+        for(Integer index: depts.keySet()) {
+            write(index + ". " + depts.get(index));
+        }
+        String projectID = readLine();
         if (projectID.equals("#")) {
             return;
         }
