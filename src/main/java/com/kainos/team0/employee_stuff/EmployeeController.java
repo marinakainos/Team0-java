@@ -24,6 +24,7 @@ public class EmployeeController {
 //                1);
 
         System.out.println(empC.generateReport());
+        System.out.println(empC.generateDepartments());
     }
 
     public EmployeeController (Connection connection){
@@ -110,6 +111,26 @@ public class EmployeeController {
 
         return report;
     }
+
+    public Map<Integer, String> generateDepartments() {
+        String sql = "SELECT * from Department;";
+        Map<Integer, String> deps = new HashMap<>();
+
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("DepartmentID");
+                String name = rs.getString("DepartmentName");
+                deps.put(id, name);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return deps;
+    }
+
 
     private String genEmployeeNumber(){
         return "1";
