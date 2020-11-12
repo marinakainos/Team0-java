@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class Main {
     private static BufferedReader reader;
+    private static InputStreamReader isr;
     private static EmployeeController ec;
 
     public static void main(String[] args) {
@@ -19,7 +20,8 @@ public class Main {
 
         write("Team 0 HR");
         // setup
-        reader = new BufferedReader(new InputStreamReader(System.in));
+        isr = new InputStreamReader(System.in);
+        reader = new BufferedReader(isr);
 
         write("Connecting... Please wait...");
         Connection c = DBConnection.getConnection();
@@ -96,6 +98,7 @@ public class Main {
     private static void waitToContinue() {
         readLine("\nPress enter key to continue...");
     }
+
     private static void requestEmployee() {
         // OPTION 1
         write("\nThis function enters a new employee into the system.\nEnter '#' to cancel.");
