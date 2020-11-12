@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.util.Map;
 
 public class Main {
     private static BufferedReader reader;
@@ -30,23 +31,37 @@ public class Main {
             // 1. Enter employee details
             // 2. Generate report per department
             write("\nPlease select an option:");
+            write("0. Exit");
             write("1. Enter new employee");
             write("2. Generate new department report");
-            write("3. Exit");
+            write("3. Generate employee gross pay report");
+            write("4. Generate highest total sales report");
+
+
 
             String response = readLine();
 
             try {
                 int selection = Integer.parseInt(response);
                 switch (selection) {
+                    case 0:
+                        System.exit(0);
                     case 1:
                         requestEmployee();
+                        waitToContinue();
                         break;
                     case 2:
                         requestDepartment();
+                        waitToContinue();
                         break;
                     case 3:
-                        System.exit(0);
+                        requestEmployeeGrossPayReport();
+                        waitToContinue();
+                        break;
+                    case 4:
+                        requestHighestSales();
+                        waitToContinue();
+                        break;
                     default:
                         write("Invalid selection");
                 }
@@ -67,6 +82,7 @@ public class Main {
             write(s);
         }
         try {
+            System.out.flush();
             return reader.readLine();
         } catch (IOException e) {
             return null;
@@ -77,17 +93,49 @@ public class Main {
         return readLine(null);
     }
 
+    private static void waitToContinue() {
+        readLine("\nPress enter key to continue...");
+    }
     private static void requestEmployee() {
-        write("This function enters a new employee into the system.\nEnter '#' to cancel.");
+        // OPTION 1
+        write("\nThis function enters a new employee into the system.\nEnter '#' to cancel.");
         String number = readLine("Enter Employee ID number:");
         if (number.equals("#")) {
             return;
         }
-        String department = readLine("Enter department ID:");
+
+        String department = "";
+        Map<Integer, String> depts = ec.generateDepartments();
+        while(true) {
+            write("Enter department ID:");
+            // display departments
+            for(Integer index: depts.keySet()) {
+                write(index + ". " + depts.get(index));
+            }
+            department = readLine();
+            if (!depts.keySet().contains(Integer.parseInt(department))) {
+                // not a option
+                write("Invalid department number.");
+            } else {
+                break;
+            }
+        }
+
         // int
         if (department.equals("#")) {
             return;
         }
+
+        boolean isSalesEmployee = false;
+        String commisionRate;
+        String salesTotal;
+        if (department.equals("2")){
+            isSalesEmployee = true;
+            commisionRate = readLine("Enter commision rate:");
+            salesTotal = readLine("Enter sales total:");
+        }
+
+
         int departmentID = Integer.parseInt(department);
         String name = readLine("Enter Employee name:");
         if (name.equals("#")) {
@@ -124,13 +172,41 @@ public class Main {
         } else {
             write("Error: The user could not be added.");
         }
+        if (isSalesEmployee) {
+            //ret = ec.CreateSalesEmployee(commisionRate, salesTotal);
+            if (ret != null) {
+                write( ret+ " has been added to the system.");
+            } else {
+                write("Error: The user could not be added.");
+            }
+        }
 
     }
 
     private static void requestDepartment() {
-        write("This generates an employee report for a department.\nEnter '#' to cancel.");
-        String name = readLine("Enter Department ID number:");
+        // OPTION 2
+        write("\nFull Employee Department Report:");
+        //generateReports returns Map<String, List<String>>
+        var map = ec.generateReport();
+        for(String dept: map.keySet()) {
+            write(dept + ": ");
+            for(String name: map.get(dept)) {
+                write("  - " + name);
+            }
+        }
+    }
 
-        // pass to controller
+    private static void requestEmployeeGrossPayReport() {
+        // OPTION 3
+        write("\nEmployee Gross Pay Report:");
+        for (String result : ec.generateGrossPayReport()) {
+            write(result);
+        }
+    }
+
+    private static void requestHighestSales() {
+        // OPTION 4
+        write("\nHighest Total Sales Report:");
+        write(ec.generateHighestSalesTotalReport());
     }
 }
