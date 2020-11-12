@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.util.Map;
 
 public class Main {
     private static BufferedReader reader;
@@ -83,7 +84,24 @@ public class Main {
         if (number.equals("#")) {
             return;
         }
-        String department = readLine("Enter department ID:");
+
+        String department = "";
+        Map<Integer, String> depts = ec.generateDepartments();
+        while(true) {
+            write("Enter department ID:");
+            // display departments
+            for(Integer index: depts.keySet()) {
+                write(index + ". " + depts.get(index));
+            }
+            department = readLine();
+            if (!depts.keySet().contains(Integer.parseInt(department))) {
+                // not a option
+                write("Invalid department number.");
+            } else {
+                break;
+            }
+        }
+
         // int
         if (department.equals("#")) {
             return;
@@ -146,9 +164,8 @@ public class Main {
     }
 
     private static void requestDepartment() {
-        write("This generates an employee report for a department.\nEnter '#' to cancel.");
-        String name = readLine("Enter Department ID number:");
-
-        // pass to controller
+        write("Full Employee Report:");
+        write(ec.generateReport().toString());
+        //generateReports returns Map<String, List<String>>
     }
 }
