@@ -82,6 +82,7 @@ public class Main {
             write(s);
         }
         try {
+            System.out.flush();
             return reader.readLine();
         } catch (IOException e) {
             return null;
@@ -197,6 +198,7 @@ public class Main {
 
     private static void requestEmployeeGrossPayReport() {
         // OPTION 3
+        write("\nEmployee Gross Pay Report:");
         for (String result : ec.generateGrossPayReport()) {
             write(result);
         }
