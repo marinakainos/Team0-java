@@ -1,6 +1,7 @@
 package com.kainos.team0;
 
 import com.kainos.team0.employee_stuff.EmployeeController;
+import com.kainos.team0.employee_stuff.ProjectController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.Map;
 public class Main {
     private static BufferedReader reader;
     private static EmployeeController ec;
+    private static ProjectController pc;
 
     public static void main(String[] args) {
         // System.out.println(DBConnection.testConnection());
@@ -24,6 +26,7 @@ public class Main {
         write("Connecting... Please wait...");
         Connection c = DBConnection.getConnection();
         ec = new EmployeeController(c);
+        pc = new ProjectController(c);
 
         write("Connected.");
 
@@ -36,6 +39,7 @@ public class Main {
             write("2. Generate new department report");
             write("3. Generate employee gross pay report");
             write("4. Generate highest total sales report");
+            write("5. Create new Project");
 
 
 
@@ -57,6 +61,9 @@ public class Main {
                         break;
                     case 4:
                         requestHighestSales();
+                        break;
+                    case 5:
+                        requestNewProject();
                         break;
                     default:
                         write("Invalid selection");
@@ -189,5 +196,20 @@ public class Main {
     private static void requestHighestSales() {
         write("Highest Total Sales Report:");
         write(ec.generateHighestSalesTotalReport());
+    }
+
+    private static void requestNewProject() {
+        write("This function enters a new project into the system.\nEnter '#' to cancel.");
+        String projectName = readLine("Enter Project name:");
+        if (projectName.equals("#")) {
+            return;
+        }
+
+        String ret = pc.CreateProject(projectName);
+        if (ret != null) {
+            write( ret + " has been added to the system.");
+        } else {
+            write("Error: The user could not be added.");
+        }
     }
 }
