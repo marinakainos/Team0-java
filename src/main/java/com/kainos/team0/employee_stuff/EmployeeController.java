@@ -23,8 +23,10 @@ public class EmployeeController {
 //                "dcasdaca",
 //                1);
 
-        System.out.println(empC.generateReport());
-        System.out.println(empC.generateDepartments());
+//        System.out.println(empC.generateReport());
+//        System.out.println(empC.generateDepartments());
+        empC.createSalesEmployee("John", "Sample", "FF9123459", 1_000_00,
+                null, null, "fff129", 1, (float) 0.1111, 100);
     }
 
     public EmployeeController (Connection connection){
@@ -70,7 +72,6 @@ public class EmployeeController {
             preparedStatement.setString(7, employeeNumber);
             preparedStatement.setInt(8, departmentID);
 
-
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected == 1) {
                 return name;
@@ -80,6 +81,40 @@ public class EmployeeController {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+    public void createSalesEmployee(String name,
+                                      String address,
+                                      String NI,
+                                      int salary,
+                                      String IBAN,
+                                      String BIC,
+                                      String employeeNumber,
+                                      int departmentID,
+                                      float commissionRate,
+                                      int totalSales) {
+        String sqlRetrieveID = "SELECT EmployeeID FROM Employee WHERE EmployeeNumber = ?;";
+        String sqlInsertSalesEmp = "INSERT INTO SalesEmployee (EmployeeID, CommissionRate, TotalSales) " +
+                "VALUES (?, ?, ?)";
+
+        CreateEmployee(name, address, NI, salary, IBAN, BIC, employeeNumber, departmentID);
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sqlRetrieveID);
+            ps.setString(1, employeeNumber);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int id = rs.getInt("EmployeeID");
+
+            ps = connection.prepareStatement(sqlInsertSalesEmp);
+            ps.setInt(1, id);
+            ps.setFloat(2, commissionRate);
+            ps.setInt(3, totalSales);
+            ps.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 
