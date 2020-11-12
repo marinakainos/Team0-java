@@ -38,9 +38,11 @@ public class ProjectController {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         return null;
     }
 
+<<<<<<< HEAD
 
     public Map<Project, List<String>> getEmployeesOnProject(){
         String sql =
@@ -68,15 +70,50 @@ public class ProjectController {
                     report.put(project, new ArrayList<>());
                 }
                 report.get(project).add(employee);
+=======
+    public boolean AssignEmployeeToProject(String projectID, String employeeID) {
+        String insertString = "INSERT INTO Assignment(ProjectID, EmployeeID) VALUES (?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertString);
+            preparedStatement.setString(1, projectID);
+            preparedStatement.setString(2, employeeID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected == 1) {
+                return true;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
+        return false;
+    }
+
+    public Map<Integer, String> GetProjects() {
+        String queryString = "SELECT ProjectID, ProjectName FROM Project";
+
+        Map<Integer, String> projects = new HashMap<>();
+        try {
+            ResultSet rs = connection.prepareStatement(queryString).executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("ProjectID");
+                String name = rs.getString("ProjectName");
+                projects.put(id, name);
+>>>>>>> 20035d206dfcfa4f120a871ad9b49202ce846c67
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+<<<<<<< HEAD
         return report;
     }
 
 
 
+=======
+        return projects;
+    }
+>>>>>>> 20035d206dfcfa4f120a871ad9b49202ce846c67
 }
 

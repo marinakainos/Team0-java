@@ -40,7 +40,11 @@ public class Main {
             write("3. Generate employee gross pay report");
             write("4. Generate highest total sales report");
             write("5. Create new Project");
+<<<<<<< HEAD
             write("6. Show Project");
+=======
+            write("7. Assign Employee to Project");
+>>>>>>> 20035d206dfcfa4f120a871ad9b49202ce846c67
 
 
 
@@ -66,8 +70,13 @@ public class Main {
                     case 5:
                         requestNewProject();
                         break;
+<<<<<<< HEAD
                     case 6:
                         requestProjects();
+=======
+                    case 7:
+                        requestAssignEmployee();
+>>>>>>> 20035d206dfcfa4f120a871ad9b49202ce846c67
                         break;
                     default:
                         write("Invalid selection");
@@ -217,10 +226,37 @@ public class Main {
         }
     }
 
+<<<<<<< HEAD
 
     private static void requestProjects() {
         write("Full Employee Report:");
         write(pc.getEmployeesOnProject().toString());
         //generateReports returns Map<String, List<String>>
+=======
+    private static void requestAssignEmployee() {
+        write("This function assigns an employee to a project in the system.\nEnter '#' to cancel.");
+        write("Enter Project ID:");
+
+        Map<Integer, String> depts = pc.GetProjects();
+        for(Integer index: depts.keySet()) {
+            write(index + ". " + depts.get(index));
+        }
+        String projectID = readLine();
+        if (projectID.equals("#")) {
+            return;
+        }
+
+        String employeeID = readLine("Enter Employee ID:");
+        if (employeeID.equals("#")) {
+            return;
+        }
+
+        boolean ret = pc.AssignEmployeeToProject(projectID, employeeID);
+        if (ret) {
+            write(employeeID + " has been assigned to " + projectID);
+        } else {
+            write ("Error: The assignment could not be made.");
+        }
+>>>>>>> 20035d206dfcfa4f120a871ad9b49202ce846c67
     }
 }
