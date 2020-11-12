@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.util.List;
 
 public class Main {
     private static BufferedReader reader;
@@ -30,15 +31,19 @@ public class Main {
             // 1. Enter employee details
             // 2. Generate report per department
             write("\nPlease select an option:");
+            write("0. Exit");
             write("1. Enter new employee");
             write("2. Generate new department report");
-            write("3. Exit");
+            write("3. Generated employee gross pay report");
+
 
             String response = readLine();
 
             try {
                 int selection = Integer.parseInt(response);
                 switch (selection) {
+                    case 0:
+                        System.exit(0);
                     case 1:
                         requestEmployee();
                         break;
@@ -46,7 +51,8 @@ public class Main {
                         requestDepartment();
                         break;
                     case 3:
-                        System.exit(0);
+                        requestEmployeeGrossPayReport();
+                        break;
                     default:
                         write("Invalid selection");
                 }
@@ -132,5 +138,11 @@ public class Main {
         String name = readLine("Enter Department ID number:");
 
         // pass to controller
+    }
+
+    private static void requestEmployeeGrossPayReport() {
+        for (String result : ec.generateGrossPayReport()) {
+            write(result);
+        }
     }
 }

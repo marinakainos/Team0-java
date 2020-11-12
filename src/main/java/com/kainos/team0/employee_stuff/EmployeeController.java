@@ -1,6 +1,7 @@
 package com.kainos.team0.employee_stuff;
 
 import com.kainos.team0.DBConnection;
+import com.mysql.cj.conf.ConnectionUrlParser;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -131,6 +132,32 @@ public class EmployeeController {
         return deps;
     }
 
+    public List<String> generateGrossPayReport() {
+        String sql = "SELECT Name, ROUND((Salary / 12) * 0.75, 2) as GrossPay " +
+                "FROM Employee " +
+                "UNION " +
+                "SELECT Name, ROUND((Salary / 12 + CommissionRate *  TotalSales) * 0.75, 2) as GrossPay " +
+                "FROM Employee " +
+                "INNER JOIN SalesEmployee USING (EmployeeID);";
+
+        List<String> report = new ArrayList<>();
+
+        try {
+            Statement st = connection.createStatement();
+
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String name = rs.getString("Name");
+                String grossPay = rs.getString("GrossPay");
+
+                report.add(name + ": £" + grossPay);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return report;
+    }
 
     private String genEmployeeNumber(){
         return "1";
