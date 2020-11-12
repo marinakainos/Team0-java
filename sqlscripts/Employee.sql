@@ -7,5 +7,6 @@ CREATE TABLE Employee (
     BIC VARCHAR(11),
     Salary INT NOT NULL CHECK (Salary >= 0),
     EmployeeNumber CHAR(8) NOT NULL,
-    UNIQUE(NI)
+    UNIQUE(NI),
+    UNIQUE(EmployeeNumber)
 );
