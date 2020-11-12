@@ -34,7 +34,9 @@ public class Main {
             write("0. Exit");
             write("1. Enter new employee");
             write("2. Generate new department report");
-            write("3. Generated employee gross pay report");
+            write("3. Generate employee gross pay report");
+            write("4. Generate highest total sales report");
+
 
 
             String response = readLine();
@@ -52,6 +54,9 @@ public class Main {
                         break;
                     case 3:
                         requestEmployeeGrossPayReport();
+                        break;
+                    case 4:
+                        requestHighestSales();
                         break;
                     default:
                         write("Invalid selection");
@@ -178,5 +183,10 @@ public class Main {
         for (String result : ec.generateGrossPayReport()) {
             write(result);
         }
+    }
+
+    private static void requestHighestSales() {
+        write("Highest Total Sales Report:");
+        write(ec.generateHighestSalesTotalReport());
     }
 }
