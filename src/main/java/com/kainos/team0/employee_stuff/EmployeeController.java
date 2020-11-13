@@ -78,7 +78,7 @@ public class EmployeeController {
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return null;
         }
         return null;
     }
@@ -117,7 +117,7 @@ public class EmployeeController {
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return null;
         }
         return null;
     }
