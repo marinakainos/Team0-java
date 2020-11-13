@@ -39,8 +39,6 @@ public class Main {
             write("3. Generate employee gross pay report");
             write("4. Generate highest total sales report");
 
-
-
             String response = readLine();
 
             try {
@@ -71,8 +69,6 @@ public class Main {
                 write("Invalid selection.");
             }
         }
-
-
     }
 
     private static void write(String s) {
@@ -132,13 +128,15 @@ public class Main {
         boolean isSalesEmployee = false;
         String commisionRate = "";
         String salesTotal = "";
+        float commisionR = 0f;
+        int salesT = 0;
         if (department.equals("2")){
             isSalesEmployee = true;
             commisionRate = readLine("Enter commision rate:");
+            commisionR = Float.parseFloat(commisionRate);
             salesTotal = readLine("Enter sales total:");
+            salesT = Integer.parseInt(salesTotal);
         }
-        float commisionR = Float.parseFloat(commisionRate);
-        int salesT = Integer.parseInt(salesTotal);
 
         int departmentID = Integer.parseInt(department);
         String name = readLine("Enter Employee name:");
@@ -170,7 +168,6 @@ public class Main {
 
         // pass to controller
 
-
         if (isSalesEmployee) {
             String ret = ec.createSalesEmployee(name, address, ni, salaryInt, iban, bic, number, departmentID, commisionR, salesT);
             if (ret != null) {
@@ -186,7 +183,6 @@ public class Main {
                 write("Error: The user could not be added.");
             }
         }
-
     }
 
     private static void requestDepartment() {
